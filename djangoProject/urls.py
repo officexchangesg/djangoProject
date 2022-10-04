@@ -20,3 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('myapp.urls', namespace='blog')),
 ]
+handler404 = "djangoProject.views.page_not_found_view"
