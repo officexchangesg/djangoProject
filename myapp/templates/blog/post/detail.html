@@ -11,7 +11,6 @@
       Share this post
     </a>
     </p>
-
     <h2>Similar posts</h2>
   {% for post in similar_posts %}
     <p>
@@ -20,4 +19,26 @@
   {% empty %}
     There are no similar posts yet.
   {% endfor %}
+{#    adding the total number of comments for a post.#}
+    {% with comments.count as total_comments %}
+    <h2>
+      {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+    {% endwith %}
+{#    add the list of active comments to the post detail template.#}
+    {% for comment in comments %}
+    <div class="comment">
+      <p class="info">
+        Comment {{ forloop.counter }} by {{ comment.name }}
+        {{ comment.created }}
+      </p>
+      {{ comment.body|linebreaks }}
+    </div>
+  {% empty %}
+    <p>There are no comments.</p>
+  {% endfor %}
+{#    add the comment form to the template.#}
+    {% include "blog/post/includes/comment_form.html" %}
+
+
 {% endblock %}
