@@ -10,7 +10,10 @@ from django.views.decorators.http import require_POST
 #taggit
 from taggit.models import Tag
 from django.db.models import Count
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+#below for search with trigram similarity
+from django.contrib.postgres.search import TrigramSimilarity
+
 class PostListView(ListView):
     """
     Alternative post list view
@@ -127,9 +130,32 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
+
+            #Search with multiple fields
+            # results = Post.published.annotate(
+            #     search=SearchVector('title', 'body'),
+            # ).filter(search=query)
+
+            #Stemming and ranking results
+            # search_vector = SearchVector('title', 'body')
+            # search_query = SearchQuery(query)
+            # results = Post.published.annotate(
+            #     search=search_vector,
+            #     rank=SearchRank(search_vector, search_query)
+            # ).filter(search=search_query).order_by('-rank')
+
+            #Stemming and removing stop words in different languages
+            # search_vector = SearchVector('title', 'body', config='spanish')
+            # search_query = SearchQuery(query, config='spanish')
+            # results = Post.published.annotate(
+            #     search=search_vector,
+            #     rank=SearchRank(search_vector, search_query)
+            # ).filter(search=search_query).order_by('-rank')
+
+            #Searching with trigram similarity
             results = Post.published.annotate(
-                search=SearchVector('title', 'body'),
-            ).filter(search=query)
+            similarity=TrigramSimilarity('title', query),
+            ).filter(similarity__gt=0.1).order_by('-similarity')
     return render(request,
                   'blog/post/search.html',
                   {'form': form,
