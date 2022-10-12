@@ -17,14 +17,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from myapp.sitemaps import PostSitemap
+
+from django.conf import settings
+from django.conf.urls.static import static
 sitemaps = {
     'posts': PostSitemap,
 }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('account/', include('account.urls')),
+    path('social-auth/', include('social_django.urls', namespace='social')),
     path('blog/', include('myapp.urls', namespace='blog')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap')
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 handler404 = "djangoProject.views.page_not_found_view"

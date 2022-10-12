@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7*9@hgo@f00emwkhox3ob2&8bg@=4+6q%+645&_kxm-r4-@!n3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 SITE_ID = 1
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mysite.com']
 
 # Application definition
 
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
-
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -136,13 +137,40 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SendGrid Configuration
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
 
 # Email server Gmail configuration
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'officexchangesg@gmail.com'
-# EMAIL_HOST_PASSWORD = 'rngvierryezpgvrw'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'officexchangesg@gmail.com'
+EMAIL_HOST_PASSWORD = 'rngvierryezpgvrw'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#Settings for login/logout views
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+# The PASSWORD_HASHERS setting defines the password hashers that the Django project supports
+# The scrypt hasher has been introduced in Django 4.0. It is more secure and recommended over PBKDF2. However, PBKDF2 is still the default hasher, as scrypt requires OpenSSL 1.1+ and more memory.
+# https://docs.djangoproject.com/en/4.1/topics/auth/passwords/
+# PASSWORD_HASHERS = [
+#     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+#     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+#     'django.contrib.auth.hashers.Argon2PasswordHasher',
+#     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+#     'django.contrib.auth.hashers.ScryptPasswordHasher',
+# ]
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Remember that Django will try to authenticate the user against each of the backends, so now you should be able to log in
+# seamlessly using your username or email account.
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
 
