@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
     'debug_toolbar',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -192,3 +193,6 @@ INTERNAL_IPS = [
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
