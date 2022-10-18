@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'actions.apps.ActionsConfig',
     'debug_toolbar',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -196,3 +197,6 @@ REDIS_DB = 0
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# settings to build shopping cart
+CART_SESSION_ID = 'cart'
