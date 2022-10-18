@@ -32,8 +32,11 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mysite.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
     'account.apps.AccountConfig',
     'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -50,8 +53,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
     'debug_toolbar',
-    'shop.apps.ShopConfig',
-    'cart.apps.CartConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -188,8 +190,8 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 INTERNAL_IPS = [
     '127.0.0.1',
+    'localhost'
 ]
-
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
