@@ -34,6 +34,9 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mysite.com']
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
+    'coupons.apps.CouponsConfig',
     'account.apps.AccountConfig',
     'django.contrib.admin',
 
@@ -81,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -141,6 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -202,3 +207,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # settings to build shopping cart
 CART_SESSION_ID = 'cart'
+
+# Stripe settings
+STRIPE_PUBLISHABLE_KEY = 'pk_test_xIPvyfNFj2XNaBDhvniu7FwT00zwW40H7J' # Publishable key
+STRIPE_SECRET_KEY = 'sk_test_6BU4UUc9ihPH2eckrRhp1V3R00PCU1NzHT'      # Secret key
+STRIPE_API_VERSION = '2022-08-01'
+
+STRIPE_WEBHOOK_SECRET = 'whsec_965e852e543294ec42318a7e1ad1345f09190ae1af08e3ac8d1d0024d9f63366'
+
